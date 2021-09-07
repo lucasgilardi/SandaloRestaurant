@@ -1,0 +1,31 @@
+.about-us{
+    height: 100vh;
+    background-color: #8E7A0A;
+}
+.about-back-img{
+    background-image: url(../img/about-1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.about-title{
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Source Serif Pro', serif;
+    color: #DFB900;
+    @media (max-width: 575.98px){
+        text-align: center;
+        font-size: 2rem;
+    }
+}
+.about-text{
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: white;
+    text-align: justify;
+    width: 80%;
+    @media (max-width: 575.98px){
+        width: 100%;
+        font-size: 0.8rem;
+    }
+}

@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1, 
+        "nombre": "Falafel", 
+        "precio": 250, 
+        "tipo": "principal", 
+        "descripcion": "Croquetas especiadas de garbanzos servida en pan pita con tahini."
+    },
+    {
+        "id": 2, 
+        "nombre": "Matambre a la parrilla", 
+        "precio": 550, 
+        "tipo": "principal", 
+        "descripcion": "Seitán asado a la parilla acompañado de salsa criolla y ensalada de rúcula."
+    },
+    {
+        "id": 3, 
+        "nombre": "Pizza mediterránea", 
+        "precio": 350, 
+        "tipo": "principal", 
+        "descripcion": "Base de masa madre, con vegetales y queso de almendras."
+    },
+    {
+        "id": 4, 
+        "nombre": "Curry de garbanzos", 
+        "precio": 350, 
+        "tipo": "principal", 
+        "descripcion": "Cremoso curry de garbanzos y calabaza con toque picante."
+    },
+    {
+        "id": 5, 
+        "nombre": "Pastas de arveja", 
+        "precio": 300, 
+        "tipo": "principal", 
+        "descripcion": "Tallarines de harina de arveja con salsa boloñesa tradicional de soja texturizada."
+    },
+    {
+        "id": 6, 
+        "nombre": "Pan pita", 
+        "precio": 150, 
+        "tipo": "principal", 
+        "descripcion": "El pan pita del chef con relleno de verduras salteadas y hummus."
+    }
+]

@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+//Partial imports
+@import 'components/navbar';
+@import 'components/home';
+@import 'components/about';
+@import 'components/menu';
+@import 'components/reserva';
+@import 'components/footer';

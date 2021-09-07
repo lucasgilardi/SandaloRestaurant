@@ -1,0 +1,43 @@
+nav{
+    ul{
+        li{
+            a{
+                color: #E8BF65!important;
+                font-weight: 700;
+
+                &:hover{
+                    color: #DFB900!important;
+                }
+            }
+        }
+    }
+}
+.fixed-top{
+    z-index: 1!important;
+}
+
+.navbar-collapse{
+    @media (max-width: 575.98px){
+        background-color: #a54b0a;
+        padding: 0.5rem;
+        margin-top: 1rem;
+        box-shadow: -5px 7px 14px -8px rgb(0 0 0 / 71%);
+    }
+
+    ul{
+        li{
+            @media (max-width: 575.98px){
+                padding: 0.5rem;
+            }
+        }
+    }
+}
+
+.navbar-light .navbar-toggler{
+    color: rgb(255 255 255);
+    border-color: rgb(255 255 255);
+
+    &:focus{
+        box-shadow: none;
+    }
+}
