@@ -16,6 +16,11 @@ nav{
     z-index: 1!important;
 }
 
+.hamburger-icon{
+    font-size: 1.2rem;
+    color: #DFB900;
+}
+
 .navbar-collapse{
     @media (max-width: 575.98px){
         background-color: #a54b0a;
