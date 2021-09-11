@@ -1,4 +1,4 @@
-//CLASES
+/*CLASES*/
 class Reserva{
     constructor(pNombre, pApellido, pTelefono, pMail, pDia, pHora, pCantidadPersonas){
         this.nombre = pNombre;
@@ -18,7 +18,7 @@ class Carrito{
     }
 }
 
-//FUNCIONES
+/*FUNCIONES*/
 function validarFormReserva(){
     let ok = true;
 
@@ -170,42 +170,44 @@ function mostrarCarrito(){
     });
 }
 
-//CONSTANTES
+function mostrarPlatosMenu(){
+    $.getJSON(URLJSON, function (respuesta, estado) {
+        if(estado === "success"){
+          let menu = respuesta;
+            for (const plato of menu){
+                $(`.div-general-menu`).append(`<div class="col-6 sub-div-menu">
+                                                    <div class="div-plato">
+                                                        <h5>${plato.nombre}</h5>
+                                                        <p class="plato-description">${plato.descripcion}</p>
+                                                        <div class="d-flex justify-content-between price-select">
+                                                            <p class="plato-price">$${plato.precio}</p>
+                                                            <button class="btn-select-plato" id="btn-select${plato.id}"><i class="fas fa-plus-square"></i></button>
+                                                        </div>
+                                                    </div>
+                                            </div>`);
+                //Push platos al carrito
+                $(`#btn-select${plato.id}`).on("click", function(){
+                let platoSeleccionado = menu.find(x => x.id == `${plato.id}`);
+                carrito.products.push(platoSeleccionado);
+                mostrarMensajePlatoAgregado();
+                });
+            }  
+        }
+    });
+    
+}
+
+/*CONSTANTES*/
 //Array reservas
 const arrayReservas = [];
 
-//AJAX. Platos del menú
+//Archivo JSON local > Datos platos del menú
 const URLJSON = "data/data.json"
-$.getJSON(URLJSON, function (respuesta, estado) {
-    if(estado === "success"){
-      let menu = respuesta;
-    
-        //For of > Agregar platos al DOM y push de platos al carrito con JQuery
-        for (const plato of menu){
-            $(`.div-general-menu`).append(`<div class="col-6 sub-div-menu">
-                                                <div class="div-plato">
-                                                    <h5>${plato.nombre}</h5>
-                                                    <p class="plato-description">${plato.descripcion}</p>
-                                                    <div class="d-flex justify-content-between price-select">
-                                                        <p class="plato-price">$${plato.precio}</p>
-                                                        <button class="btn-select-plato" id="btn-select${plato.id}"><i class="fas fa-plus-square"></i></button>
-                                                    </div>
-                                                </div>
-                                        </div>`);
-
-            $(`#btn-select${plato.id}`).on("click", function(){
-            let platoSeleccionado = menu.find(x => x.id == `${plato.id}`);
-            carrito.products.push(platoSeleccionado);
-            mostrarMensajePlatoAgregado();
-            });
-        }  
-    }
-});
 
 //Carrito
 const carrito = new Carrito("Usuario 1");
 
-//LISTENERS
+/*LISTENERS*/
 //Envío y reseteo formulario reserva
 let formReserva = document.getElementById("formulario");
 formReserva.addEventListener("submit", function(e){
@@ -219,3 +221,6 @@ $(`#notification-btn`).on("click", mostrarNotificacionReserva);
 
 //Carrito
 $(`#carrito-btn`).on("click", mostrarCarrito);
+
+/*LLAMADO FUNCIONES*/
+mostrarPlatosMenu();
