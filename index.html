@@ -4,6 +4,15 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--SEO-->
+    <!--General meta tags-->
+    <meta name="description" content="Restaurante vegano con variedad de platos 100% plant based. ¡Reserva tu mesa online para visitarnos o hace tu pedido y esperalo en tu casa!">
+    <meta name="keywords" content="Restaurante, comida, vegana, vegano, plant based, vegetal, cocina vegana, vegetariano">
+    <!--Open graph-->
+    <meta property="og:title" content="Sándalo Restaurant Vegano">
+    <meta property="og:image" content="https://i.ibb.co/WKrNPj5/Proyecto-Javascript.png">
+    <meta property="og:author" content="Lucas Gilardi">
+    <meta property="og:description" content="Restaurante vegano con variedad de platos 100% plant based. ¡Reserva tu mesa online para visitarnos o hace tu pedido y esperalo en tu casa!">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- CSS -->
@@ -15,7 +24,7 @@
     <!--LINK FONTS AWESOME-->
     <script src="https://kit.fontawesome.com/1bb6d48af2.js" crossorigin="anonymous"></script>
 
-    <title>Sándalo | Restaurant</title>
+    <title>Sándalo | Restaurante de cocina vegana</title>
   </head>
   <body>
 
@@ -145,9 +154,10 @@
                         <div class="col-12 col-md-9 m-auto">
                             <div class="d-flex">
                                 <h2 class="menu-title">Platos de la semana</h2>
-                                <button class="cart-btn" id="carrito-btn"><i class="fas fa-shopping-cart"></i></button>
+                                <button class="cart-btn" id="carrito-btn"><i class="fas fa-shopping-cart"></i><span id="acumuladorPlatos" class="acumulador-platos">0</span></button>
                                 <!--Div carrito-->
                                 <div class="div-productos-carrito" id="divCarrito"></div>
+                                
                                 <!--Div mensaje pedido realizado-->
                                 <div id="mensajePedido"></div>
                             </div>

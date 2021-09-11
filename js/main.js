@@ -125,7 +125,7 @@ function mostrarNotificacionReserva(){
 }
 
 function mostrarCarrito(){
-    $(`#divCarrito`).append($(`<div id="sub-div-carrito" style="display: none; height: 100%">
+    $(`#divCarrito`).append($(`<div id="sub-div-carrito" style="display: none; height: 100%;">
                                     <div class="div-carrito-title">
                                         <div class="div-carrito">
                                             <i class="fas fa-shopping-cart"></i>
@@ -135,29 +135,22 @@ function mostrarCarrito(){
                                     </div>
                                     <p class="carrito-subtitle">Estás llevando...</p>
                                     <div id="div-platos-agregados"></div>
+                                    <button class="btn-vaciar-carrito" id="vaciar-carrito"> Vaciar carrito </button>
+                                    <div id="div-total-carrito"></div>
                                     <div id="div-pago-carrito"></div>
                                 </div>`).slideDown(500));
+                        
+    calcularPrecioTotal();
 
-    //Calcular precio total
-    let precioFinal = 0;
-    for (const platoSeleccionado of carrito.products){
-        $(`#div-platos-agregados`).append(`<p>Plato ${platoSeleccionado.tipo} <b>${platoSeleccionado.nombre}</b> por un precio de <b>${platoSeleccionado.precio}</b></p>`);
-
-        let precioTotal = platoSeleccionado.precio;
-        precioFinal+=precioTotal;
-    }
-
-    //Mostrar total a pagar y formulario de compra
-    $(`#div-pago-carrito`).append(`<hr>
-                                   <p class="carrito-total">El precio total a pagar es <b>$${precioFinal}</b></p>
-                                   <hr>
-                                   <p>Para continuar con el pago, ingresá los siguientes datos:</p>
-                                   <form id="formPedido">
-                                        <input type="text" name="nombreCompra" id="nombreCompra" placeholder="Nombre y apellido">
-                                        <input type="text" name="direccionCompra" id="direccionCompra" placeholder="Dirección">
-                                        <input type="email" name="mailCompra" id="mailCompra" placeholder="Mail">
-                                        <input type="submit" name="enviar" value="Enviar">
-                                   </form>`);
+    //Formulario de pago
+    $(`#div-pago-carrito`).append(`
+                                  <p>Para continuar con el pago, ingresá los siguientes datos:</p>
+                                  <form id="formPedido">
+                                       <input type="text" name="nombreCompra" id="nombreCompra" placeholder="Nombre y apellido">
+                                       <input type="text" name="direccionCompra" id="direccionCompra" placeholder="Dirección">
+                                       <input type="email" name="mailCompra" id="mailCompra" placeholder="Mail">
+                                       <input type="submit" name="enviar" value="Enviar">
+                                  </form>`);
 
     //Enviar formulario pedido
     $(`#formPedido`).on("submit", validarFormPedido);
@@ -168,12 +161,43 @@ function mostrarCarrito(){
             $(`#sub-div-carrito`).remove();
         });
     });
+
+    $(`#vaciar-carrito`).on("click", vaciarCarrito);
+}
+
+function calcularPrecioTotal(){
+   //Calcular precio total
+   let precioFinal = 0;
+   for (const platoSeleccionado of carrito.products){
+       $(`#div-platos-agregados`).append(`<p>Plato ${platoSeleccionado.tipo} <b>${platoSeleccionado.nombre}</b> por un precio de <b>${platoSeleccionado.precio}</b></p>`);
+
+       let precioTotal = platoSeleccionado.precio;
+       precioFinal+=precioTotal;
+   }
+
+   //Mostrar total a pagar y formulario de compra
+   $(`#div-total-carrito`).append(`<hr>
+                                  <p class="carrito-total">El precio total a pagar es <b>$${precioFinal}</b></p>
+                                  <hr>`);
+}
+//ARREGLAR!!
+function vaciarCarrito(){
+    carrito.products = [];
+    $(`#vaciar-carrito`).remove();
+    $(`#div-platos-agregados`).remove();
+    $(`#div-total-carrito`).remove();
+    //Reiniciar contador items carrito
+    const span = document.getElementById("acumuladorPlatos");
+    span.textContent = 0;
 }
 
 function mostrarPlatosMenu(){
     $.getJSON(URLJSON, function (respuesta, estado) {
         if(estado === "success"){
           let menu = respuesta;
+          //Acumulador cantidad items carrito.
+          const span = document.getElementById("acumuladorPlatos");
+          let acumuladorPlatosAgregados = 0;
             for (const plato of menu){
                 $(`.div-general-menu`).append(`<div class="col-6 sub-div-menu">
                                                     <div class="div-plato">
@@ -190,11 +214,13 @@ function mostrarPlatosMenu(){
                 let platoSeleccionado = menu.find(x => x.id == `${plato.id}`);
                 carrito.products.push(platoSeleccionado);
                 mostrarMensajePlatoAgregado();
+                //Mostrar acumulador cantidad items carrito
+                acumuladorPlatosAgregados++;
+                span.textContent = acumuladorPlatosAgregados;
                 });
             }  
         }
     });
-    
 }
 
 /*CONSTANTES*/
