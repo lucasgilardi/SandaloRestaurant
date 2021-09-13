@@ -49,7 +49,7 @@ function mostrarReservaDom(){
                                     <p><i>Para ver nuevamente los datos de su reserva presione el botón de notificaciones arriba a la izquierda.</i></p>
 
                                     <button id="btn-aceptar-reserva">Aceptar</button>
-                                </div>`).fadeIn(200));
+                                   </div>`).fadeIn(200));
 
     $(`#btn-aceptar-reserva`).on("click", function(){
         $(`#sub-div-reserva`).fadeOut(200, function(){
@@ -60,11 +60,11 @@ function mostrarReservaDom(){
 
 function mostrarMensajePlatoAgregado(){
     $(`#platoAgregado`).append($(`<div id="sub-div-plato-agregado" style="display: none">
-                                    <h6>¡Plato agregado!</h6>
-                                    <p>Presiona el carrito para ver tu compra.</p>
+                                      <h6>¡Plato agregado!</h6>
+                                      <p>Presiona el carrito para ver tu compra.</p>
 
-                                    <button id="btn-aceptar-plato">Aceptar</button>
-                                </div>`).fadeIn(200));
+                                      <button id="btn-aceptar-plato">Aceptar</button>
+                                   </div>`).fadeIn(200));
 
     $(`#btn-aceptar-plato`).on("click", function(){
         $(`#sub-div-plato-agregado`).fadeOut(200, function(){
@@ -89,11 +89,11 @@ function validarFormPedido(e){
 
 function mostrarMensajePedidoConfirmado(){
     $(`#mensajePedido`).append(`<div class="div-mensaje-pedido" id="sub-div-mensaje-pedido">
-                                <h6>¡Perfecto!</h6>
-                                <p>Gracias por ordenar en Sándalo Restaurant, ${document.getElementById("nombreCompra").value}</p>
-                                <p>Realizá tu pago a través de Mercado Pago y una vez validado recibirás un mail con la confirmación de tu pedido.</p>
+                                    <h6>¡Perfecto!</h6>
+                                    <p>Gracias por ordenar en Sándalo Restaurant, ${document.getElementById("nombreCompra").value}</p>
+                                    <p>Realizá tu pago a través de Mercado Pago y una vez validado recibirás un mail con la confirmación de tu pedido.</p>
 
-                                <a href="https://www.mercadopago.com.ar/" target="_blank" id="btn-aceptar-mensaje">CONTINUAR A MERCADO PAGO</a>
+                                    <a href="https://www.mercadopago.com.ar/" target="_blank" id="btn-aceptar-mensaje">CONTINUAR A MERCADO PAGO</a>
                                 </div>`);
 
     $(`#btn-aceptar-mensaje`).on("click", function(){
@@ -125,26 +125,30 @@ function mostrarNotificacionReserva(){
 }
 
 function mostrarCarrito(){
-    $(`#divCarrito`).append($(`<div id="sub-div-carrito" style="display: none; height: 100%;">
-                                    <div class="div-carrito-title">
-                                        <div class="div-carrito">
-                                            <i class="fas fa-shopping-cart"></i>
-                                            <h6>CARRITO</h6>
+    $(`#divCarrito`).append($(`<div class="div-animation" id="div-animation" style="display: none; height: 100%;">
+                                    <div class="sub-div-carrito" id="sub-div-carrito">
+                                        <div>
+                                            <div class="div-carrito-title">
+                                                <div class="div-carrito">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                    <h6>CARRITO</h6>
+                                                </div>
+                                                <button id="btn-cerrar-carrito"><i class="fas fa-times"></i></button>
+                                            </div>
+                                            <p class="carrito-subtitle">Estás llevando...</p>
+                                            <hr>
                                         </div>
-                                        <button id="btn-cerrar-carrito"><i class="fas fa-times"></i></button>
+                                        <div id="div-platos-agregados"></div>
+                                        <button class="btn-vaciar-carrito" id="vaciar-carrito" style="display: none;"> Vaciar carrito </button>
+                                        <div id="div-total-carrito"></div>
+                                        <div id="div-pago-carrito"></div>
                                     </div>
-                                    <p class="carrito-subtitle">Estás llevando...</p>
-                                    <div id="div-platos-agregados"></div>
-                                    <button class="btn-vaciar-carrito" id="vaciar-carrito"> Vaciar carrito </button>
-                                    <div id="div-total-carrito"></div>
-                                    <div id="div-pago-carrito"></div>
                                 </div>`).slideDown(500));
-                        
+
     calcularPrecioTotal();
 
     //Formulario de pago
-    $(`#div-pago-carrito`).append(`
-                                  <p>Para continuar con el pago, ingresá los siguientes datos:</p>
+    $(`#div-pago-carrito`).append(`<p>Para continuar con el pago, ingresá los siguientes datos:</p>
                                   <form id="formPedido">
                                        <input type="text" name="nombreCompra" id="nombreCompra" placeholder="Nombre y apellido">
                                        <input type="text" name="direccionCompra" id="direccionCompra" placeholder="Dirección">
@@ -155,13 +159,14 @@ function mostrarCarrito(){
     //Enviar formulario pedido
     $(`#formPedido`).on("submit", validarFormPedido);
     
-    //Botón para cerrar carrito.
+    //Botón para cerrar carrito
     $(`#btn-cerrar-carrito`).on("click", function(){
-        $(`#sub-div-carrito`).slideUp(500, function(){
-            $(`#sub-div-carrito`).remove();
+        $(`#div-animation`).slideUp(500, function(){
+            $(`#div-animation`).remove();
         });
     });
 
+    //Botón para vaciar carrito
     $(`#vaciar-carrito`).on("click", vaciarCarrito);
 }
 
@@ -173,6 +178,9 @@ function calcularPrecioTotal(){
 
        let precioTotal = platoSeleccionado.precio;
        precioFinal+=precioTotal;
+
+       //Mostrar botón para vaciar carrito
+       $(`#vaciar-carrito`).show();
    }
 
    //Mostrar total a pagar y formulario de compra
@@ -180,14 +188,16 @@ function calcularPrecioTotal(){
                                   <p class="carrito-total">El precio total a pagar es <b>$${precioFinal}</b></p>
                                   <hr>`);
 }
-//ARREGLAR!!
+
 function vaciarCarrito(){
     carrito.products = [];
-    $(`#vaciar-carrito`).remove();
-    $(`#div-platos-agregados`).remove();
-    $(`#div-total-carrito`).remove();
-    //Reiniciar contador items carrito
-    const span = document.getElementById("acumuladorPlatos");
+    $(`#vaciar-carrito`).fadeOut("fast");
+    $(`#div-platos-agregados`).fadeOut("fast", function(){
+        $(`#div-platos-agregados`).empty();
+    });
+    $(`#div-total-carrito`).empty();
+    calcularPrecioTotal();
+    acumuladorPlatosAgregados = 0;
     span.textContent = 0;
 }
 
@@ -195,9 +205,6 @@ function mostrarPlatosMenu(){
     $.getJSON(URLJSON, function (respuesta, estado) {
         if(estado === "success"){
           let menu = respuesta;
-          //Acumulador cantidad items carrito.
-          const span = document.getElementById("acumuladorPlatos");
-          let acumuladorPlatosAgregados = 0;
             for (const plato of menu){
                 $(`.div-general-menu`).append(`<div class="col-6 sub-div-menu">
                                                     <div class="div-plato">
@@ -208,17 +215,19 @@ function mostrarPlatosMenu(){
                                                             <button class="btn-select-plato" id="btn-select${plato.id}"><i class="fas fa-plus-square"></i></button>
                                                         </div>
                                                     </div>
-                                            </div>`);
+                                                </div>`);
+                
                 //Push platos al carrito
                 $(`#btn-select${plato.id}`).on("click", function(){
-                let platoSeleccionado = menu.find(x => x.id == `${plato.id}`);
-                carrito.products.push(platoSeleccionado);
-                mostrarMensajePlatoAgregado();
-                //Mostrar acumulador cantidad items carrito
-                acumuladorPlatosAgregados++;
-                span.textContent = acumuladorPlatosAgregados;
+                    let platoSeleccionado = menu.find(x => x.id == `${plato.id}`);
+                    carrito.products.push(platoSeleccionado);
+                    mostrarMensajePlatoAgregado();
+                    
+                    //Mostrar acumulador cantidad items carrito
+                    acumuladorPlatosAgregados++;
+                    span.textContent = acumuladorPlatosAgregados;
                 });
-            }  
+            } 
         }
     });
 }
@@ -232,6 +241,10 @@ const URLJSON = "data/data.json"
 
 //Carrito
 const carrito = new Carrito("Usuario 1");
+
+//Const <span> para variable acumuladora de cantidad items carrito
+const span = document.getElementById("acumuladorPlatos");
+let acumuladorPlatosAgregados = 0;
 
 /*LISTENERS*/
 //Envío y reseteo formulario reserva
